@@ -13,10 +13,10 @@ galleryListEl.insertAdjacentHTML('beforeend', galleryListItems)
 const galleryImage = document.querySelectorAll('.gallery__image');
 
 galleryListEl.addEventListener('click', (evt) => {
+    evt.preventDefault()
     if (evt.target.nodeName === 'IMG') {
-        const elIndex = [...galleryImage].indexOf(evt.target)
         const instance = basicLightbox.create(`
-            <img src="${galleryItems[elIndex].original}" width="800" height="600">
+            <img src="${evt.target.dataset.source}" width="800" height="600">
         `)
 
         instance.show()
@@ -27,6 +27,6 @@ galleryListEl.addEventListener('click', (evt) => {
 
 function createGalleryItems(imagesArray) {
    
-    return imagesArray.map(el => `<div class="gallery__item"><img src="${el.preview}" alt="${el.description}" class="gallery__image"></div>`
+    return imagesArray.map(el => `<div class="gallery__item"><a class="gallery__link" href="${el.original}"><img src="${el.preview}" alt="${el.description}" data-source="${el.original}" class="gallery__image"></a></div>`
     ).join('')
 }
